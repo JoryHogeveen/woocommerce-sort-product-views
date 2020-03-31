@@ -1,12 +1,13 @@
 <?php
 /**
- * Plugin Name: WooCommerce Sort By Product Views
- * Plugin URI:  https://www.keraweb.nl
- * Description: Sort products by number of views through the Post Views Counter plugin
- * Author:      Jory Hogeveen
- * Author URI:  https://www.keraweb.nl
- * Version:     1.0
- * Text Domain: woocommerce-sort-product-views
+ * Plugin Name:       WooCommerce Sort By Product Views
+ * Plugin URI:        https://www.keraweb.nl
+ * Description:       Sort products by number of views through the Post Views Counter plugin
+ * Author:            Jory Hogeveen
+ * Author URI:        https://www.keraweb.nl
+ * Version:           1.0
+ * Text Domain:       woocommerce-sort-product-views
+ * GitHub Plugin URI: JoryHogeveen/woocommerce-sort-product-views
  */
 
 // Prevent direct file access.
