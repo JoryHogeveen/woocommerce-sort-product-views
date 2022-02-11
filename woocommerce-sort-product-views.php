@@ -108,19 +108,22 @@ class Ker_WC_SortProductViews
 		$posts = $wpdb->posts;
 		$views = $wpdb->get_blog_prefix() . 'post_views';
 
+		// SELECT
+		$query_args['fields'] .= ", CASE WHEN {$posts}.post_parent > 0 THEN ppv.count ELSE pv.count END AS order_count";
+		$query_args['fields'] .= ", CASE WHEN {$posts}.post_parent > 0 THEN pp.post_date ELSE {$posts}.post_date END AS order_date";
+
 		// JOIN
 		$query_args['join'] .= " LEFT JOIN {$views} pv ON {$posts}.ID = pv.id AND pv.period = '{$this->period}'";
+		$query_args['join'] .= " LEFT JOIN {$posts} pp ON {$posts}.post_parent = pp.ID";
 		$query_args['join'] .= " LEFT JOIN {$views} ppv ON {$posts}.post_parent = ppv.id AND ppv.period = '{$this->period}'";
 
 		// ORDER BY
 		$month_ago = date_i18n( 'Y-m-d', strtotime( '-1 month' ) );
 		$cases = array(
-			"CASE WHEN {$posts}.post_date >= '{$month_ago}' THEN {$posts}.post_date END {$this->order}",
-			"CASE WHEN ppv.count IS NOT NULL AND {$posts}.post_date >= '{$month_ago}' THEN ppv.count END {$this->order}",
-			"CASE WHEN ppv.count IS NOT NULL AND {$posts}.post_date < '{$month_ago}' THEN ppv.count END {$this->order}",
-			"CASE WHEN {$posts}.post_date >= '{$month_ago}' THEN pv.count END {$this->order}",
-			"CASE WHEN {$posts}.post_date < '{$month_ago}' THEN pv.count END {$this->order}",
-			"CASE WHEN {$posts}.post_date < '{$month_ago}' THEN {$posts}.post_date END {$this->order}",
+			"CASE WHEN order_date >= '{$month_ago}' THEN order_date END {$this->order}",
+			"CASE WHEN order_date >= '{$month_ago}' THEN order_count END {$this->order}",
+			"CASE WHEN order_date < '{$month_ago}' THEN order_count END {$this->order}",
+			"CASE WHEN order_date < '{$month_ago}' THEN order_date END {$this->order}",
 		);
 		$query_args['orderby'] = implode( ', ' , $cases );
 
