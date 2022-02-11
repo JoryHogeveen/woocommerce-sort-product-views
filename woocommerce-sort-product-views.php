@@ -118,14 +118,13 @@ class Ker_WC_SortProductViews
 		$query_args['join'] .= " LEFT JOIN {$views} ppv ON {$posts}.post_parent = ppv.id AND ppv.period = '{$this->period}'";
 
 		// ORDER BY
-		$month_ago = date_i18n( 'Y-m-d', strtotime( '-1 month' ) );
-		$cases = array(
+		$month_ago   = date_i18n( 'Y-m-d', strtotime( '-1 month' ) );
+		$order_rules = array(
 			"CASE WHEN order_date >= '{$month_ago}' THEN order_date END {$this->order}",
-			"CASE WHEN order_date >= '{$month_ago}' THEN order_count END {$this->order}",
-			"CASE WHEN order_date < '{$month_ago}' THEN order_count END {$this->order}",
-			"CASE WHEN order_date < '{$month_ago}' THEN order_date END {$this->order}",
+			"order_count {$this->order}",
+			"order_date {$this->order}",
 		);
-		$query_args['orderby'] = implode( ', ' , $cases );
+		$query_args['orderby'] = implode( ', ' , $order_rules );
 
 		return $query_args;
 	}
