@@ -5,7 +5,7 @@
  * Description:       Sort products by number of views through the Post Views Counter plugin
  * Author:            Jory Hogeveen
  * Author URI:        https://www.keraweb.nl
- * Version:           1.0
+ * Version:           1.1
  * Text Domain:       woocommerce-sort-product-views
  * GitHub Plugin URI: JoryHogeveen/woocommerce-sort-product-views
  */
