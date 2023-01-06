@@ -108,6 +108,9 @@ class Ker_WC_SortProductViews
 		$posts = $wpdb->posts;
 		$views = $wpdb->get_blog_prefix() . 'post_views';
 
+		// Remove filter to prevent changes to other queries.
+		remove_filter( 'posts_clauses', array( $this, 'order_by_product_views' ) );
+
 		// SELECT
 		$query_args['fields'] .= ", CASE WHEN {$posts}.post_parent > 0 THEN ppv.count ELSE pv.count END AS order_count";
 		$query_args['fields'] .= ", CASE WHEN {$posts}.post_parent > 0 THEN pp.post_date ELSE {$posts}.post_date END AS order_date";
